@@ -7,8 +7,16 @@ let b = input[2].split(" ").map(Number);
 
 // Please Write your code here.
 function isConnected(num1, num2) {
-    const [str1, str2] = [num1.join("").toString(), num2.join("").toString()];
-    return str1.includes(str2);
+    const startIndex = num1.indexOf(num2[0]);
+    if (startIndex === -1) {
+        return false;
+    }
+    for (let i = 0; i < num2.length; i++) {
+        if (num1[startIndex + i] !== num2[i]) {
+            return false;
+        }
+    }
+    return true;
 }
 
 console.log(isConnected(a, b) ? "Yes" : "No");
