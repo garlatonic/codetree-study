@@ -4,8 +4,11 @@ let [a, b] = input[0].split(" ").map(Number);
 // Please Write your code here.
 
 function solution(a, b) {
-    const [min, max] = [Math.min(a, b), Math.max(a, b)];
-    return [min * 2, max + 25];
+    if (a < b) {
+        return [a * 2, b + 25]
+    } else {
+        return [a + 25, b * 2]
+    }
 }
 
 console.log(solution(a, b).join(" "))
