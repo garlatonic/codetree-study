@@ -7,16 +7,17 @@ let b = input[2].split(" ").map(Number);
 
 // Please Write your code here.
 function isConnected(num1, num2) {
-    const startIndex = num1.indexOf(num2[0]);
-    if (startIndex === -1) {
-        return false;
+  while (a.length >= num2.length) {
+    const start = num1.indexOf(num2[0]);
+    if (start === -1) return false;
+    const slice = num1.slice(start, start + num2.length);
+    if (JSON.stringify(slice) === JSON.stringify(num2)) {
+      return true;
+    } else {
+      num1.splice(start, 1);
     }
-    for (let i = 0; i < num2.length; i++) {
-        if (num1[startIndex + i] !== num2[i]) {
-            return false;
-        }
-    }
-    return true;
+  }
+  return false;
 }
 
 console.log(isConnected(a, b) ? "Yes" : "No");
