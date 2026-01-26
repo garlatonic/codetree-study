@@ -8,14 +8,19 @@ const commands = input.slice(1, n + 1);
 const MAX_OFFSET = 101;
 const arr = Array(MAX_OFFSET).fill(0);
 
-let current = Math.floor(MAX_OFFSET / 2);
+let current = Math.floor(MAX_OFFSET / 2) + 1;
 for (const command of commands) {
     const [m, d] = command.split(" ");
-    const prev = d === "L" ? current : current - m;
-    for (let i = prev; i < prev + Number(m); i++) {
-        arr[i]++;
-        current = i;
+    if (d === "L") {
+        for (let i = 0; i < Number(m); i++) {
+            arr[current + i] += 1
+        }
+    } else {
+        for (let i = 0; i < Number(m); i++) {
+            arr[current - i] += 1
+        }
     }
+    current = d === "L" ? current - Number(m) : current + Number(m)
 }
 
-console.log(arr.filter((el) => el > 1).length)
+console.log(arr.filter((el) => el > 1).length);
