@@ -4,6 +4,8 @@ const n = Number(input[0]);
 // Please Write your code here.
 
 function formatBinary(n) {
+    if (n < 1) return 0;
+
     const result = [];
 
     while (n) {
