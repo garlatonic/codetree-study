@@ -5,8 +5,8 @@ const n = Number(input[0]);
 const commands = input.slice(1).map(line => line.split(' '));
 
 // Please Write your code here.
-const OFFSET = n;
-const MAX_R = n * 2 * 100 + 1;
+const OFFSET = 100000;
+const MAX_R = 200001;
 
 const tile = Array(MAX_R).fill("");
 const checked = Array(MAX_R)
