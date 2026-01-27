@@ -33,8 +33,8 @@ for (let i = 1; i < maxTime; i++) {
     const currentA = positionA[i] ?? positionA[positionA.length - 1];
     const currentB = positionB[i] ?? positionB[positionB.length - 1];
 
-    const prevA = positionA[i - 1] ?? positionA[positionA.length - 2];
-    const prevB = positionB[i - 1] ?? positionB[positionB.length - 2];
+    const prevA = positionA[i - 1] ?? positionA[positionA.length - 1];
+    const prevB = positionB[i - 1] ?? positionB[positionB.length - 1];
     if (currentA === currentB && prevA !== prevB) {
         count++;
     }
