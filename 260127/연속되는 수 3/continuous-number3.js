@@ -9,7 +9,12 @@ let length = 1;
 let maxLength = 1;
 
 for (let i = 1; i < n; i++) {
-    if (arr[i].toString().length > 1 === arr[i - 1].toString().length > 1) {
+    // 둘 다 양수일때
+    if (arr[i] > 0 === arr[i - 1] > 0) {
+        length++;
+    }
+    // 둘 다 음수일때
+    else if (arr[i] < 0 === arr[i - 1] < 0) {
         length++;
     } else {
         maxLength = Math.max(length, maxLength);
