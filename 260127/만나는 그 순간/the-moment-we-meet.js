@@ -42,4 +42,8 @@ while (movesA.length > 0 || movesB.length > 0) {
     if (currentA === currentB) break;
 }
 
-console.log(time);
+if (movesA.length > 0 || movesB.length > 0) {
+    console.log(time);
+} else {
+    console.log(-1)
+}
