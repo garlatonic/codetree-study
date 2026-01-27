@@ -13,4 +13,5 @@ for (let i = 0; i < m; i++) {
     if (persons[personNum] === k) break;
 }
 
-console.log(persons.indexOf(k) + 1)
+if(persons.indexOf(k) === -1) console.log(-1)
+else console.log(persons.indexOf(k) + 1)
