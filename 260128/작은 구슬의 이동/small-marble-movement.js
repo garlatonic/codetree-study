@@ -16,11 +16,12 @@ function isRange(x, y) {
 const dx = [1, 0, 0, -1];
 const dy = [0, -1, 1, 0];
 
-let x = c, y = r;
+let x = c;
+let y = r;
 
 const dir = {
-    U: 2,
-    D: 1,
+    U: 1,
+    D: 2,
     R: 0,
     L: 3
 }
@@ -29,10 +30,12 @@ let go = dir[d];
 for (let s = 1; s <= t; s++) {
     let nx = x + dx[go], ny = y + dy[go];
     if (!isRange(nx, ny)) {
-        go = Math.abs(go - 3);
-        nx = x, ny = y;
+        go = 3 - go;
+        nx = x;
+        ny = y;
     }
-    x = nx, ny = y;
+    x = nx;
+    y = ny;
 }
 
 console.log(y, x)
