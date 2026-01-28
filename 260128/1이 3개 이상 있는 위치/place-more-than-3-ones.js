@@ -12,16 +12,16 @@ const dy = [1, 0, -1, 0];
 let count = 0;
 
 for (let y = 0; y < n; y++) {
-    let colCount = 0;
     for (let x = 0; x < n; x++) {
+        let nearCount = 0;
+
         for (let dirNum = 0; dirNum < 4; dirNum++) {
             let nx = x + dx[dirNum], ny = y + dy[dirNum];
-            if (inRange(nx, ny) && grid[ny][nx] === 1) {
-                colCount++;
-            }
+            if (inRange(nx, ny) && grid[ny][nx] === 1) nearCount++;
         }
+
+        if (nearCount >= 3) count++;
     }
-    if (colCount > 2) count++;
 }
 
 function inRange(x, y) {
