@@ -1,12 +1,13 @@
-const n = 3;
-const arr = ["/\\\\", "\\\\\\", "/\\/"];
-const startNum = 2;
+const fs = require("fs");
+const input = fs.readFileSync(0).toString().trim().split("\n");
+
+const n = Number(input[0]);
+const arr = input.slice(1, n + 1);
+const startNum = Number(input[n + 1]);
 
 // Please Write your code here.
 const dy = [1, 0, -1, 0];
 const dx = [0, 1, 0, -1];
-
-let x, y;
 
 arr.forEach((row, i) => {
     if (row.includes("\\")) {
@@ -14,17 +15,24 @@ arr.forEach((row, i) => {
     }
 });
 
-let dir = Math.floor(startNum / 4);
-
-// 방향에 따른 시작 좌표 설정
-if (dir % 2 === 0) {
-    // 상하
-    y = dir > 0 ? n : 0;
-    x = dir > 0 ? startNum % n : (n - (startNum % n)) % n;
+// 어디서 쏘는지?
+let dir, x, y;
+if (0 < startNum && startNum <= n) {
+    dir = 0;
+    x = startNum - 1;
+    y = 0;
+} else if (n < startNum && startNum <= 2 * n) {
+    dir = 3;
+    x = n - 1;
+    y = startNum - n - 1;
+} else if (2 * n < startNum && startNum <= 3 * n) {
+    dir = 2;
+    x = 3 * n - startNum;
+    y = n - 1;
 } else {
-    // 좌우
-    x = dir > 0 ? n : 0;
-    y = dir > 0 ? startNum % n : (n - (startNum % n)) % n;
+    dir = 1;
+    x = 0;
+    y = 4 * n - startNum;
 }
 
 function isRange(x, y) {
@@ -49,14 +57,12 @@ while (true) {
         }
     }
 
-    let nx = x + dx[dir];
-    let ny = y + dy[dir];
-
-    x = nx;
-    y = ny;
     count++;
 
-    if (!isRange(nx, ny)) break;
+    x += dx[dir];
+    y += dy[dir];
+
+    if (!isRange(x, y)) break;
 }
 
 console.log(count);
