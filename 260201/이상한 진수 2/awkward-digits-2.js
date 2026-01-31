@@ -8,11 +8,9 @@ let max = 0;
 
 for (let i = 0; i < a.length; i++) {
     let temp = [...a];
-    temp[i] = 1;
+    temp[i] = temp[i] !== '1' ? '1' : '0';
 
-    if (temp.join("") !== a) {
-        max = Math.max(parseInt(temp.join(""), 2), max);
-    }
+    max = Math.max(parseInt(temp.join(""), 2), max);
 }
 
 console.log(max)
