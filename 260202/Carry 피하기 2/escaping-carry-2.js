@@ -5,7 +5,7 @@ const n = Number(input[0]);
 const arr = input.slice(1, 1 + n).map(Number);
 
 // Please Write your code here.
-let maxSum = 0;
+let maxSum = -1;
 
 function isCarry(x, y, z) {
     let a = x, b = y, c = z;
