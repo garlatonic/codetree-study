@@ -13,8 +13,8 @@ for (let i = 0; i < n; i++) {
             sum += arr[k];
         }
 
-        const average = sum / j;
-        if(arr.includes(average)) count++;
+        const average = sum / (j - i + 1);
+        if (arr.slice(i, j + 1).includes(average)) count++;
     }
 }
 
