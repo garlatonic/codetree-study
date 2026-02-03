@@ -11,15 +11,15 @@ for (let i = 0; i < n; i++) {
 }
 
 // Please Write your code here.
-const candies = new Array(201).fill(0);
+const candies = new Array(301).fill(0);
 baskets.forEach(([candy, position]) => {
-    candies[position] = candy;
+    candies[position] += candy;
 })
 
 let maxSum = 0;
-for (let center = k; center < candies.length - k; center++) {
-    const start = center - k;
-    const end = center + k;
+for (let center = 0; center < candies.length; center++) {
+    const start = Math.max(0, center - k);
+    const end = Math.min(candies.length - 1, center + k);
 
     const slice = candies.slice(start, end + 1);
     const sum = slice.reduce((acc, cur) => acc + cur, 0);
