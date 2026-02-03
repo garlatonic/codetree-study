@@ -6,7 +6,7 @@ const arr = input[1].split(' ').map(Number);
 
 // Please Write your code here.
 let minCost = Infinity;
-for (let i = 0; i < n - t; i++) {
+for (let i = 0; i <= n - t; i++) {
     let cost = 0;
     for (let j = i; j < i + t; j++) {
         cost += Math.abs(h - arr[j]);
