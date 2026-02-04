@@ -5,19 +5,16 @@ const n = Number(input[0]);
 const points = input.slice(1, 1 + n).map(line => line.split(' ').map(Number));
 
 // Please Write your code here.
-let minDiff = Infinity;
+let minDist = Infinity;
+
 for (let i = 0; i < n; i++) {
-    let x1 = points[i][0], x2 = Infinity;
-    let y1 = points[i][1], y2 = Infinity;
+    for (let j = i + 1; j < n; j++) {
+        const dx = points[i][0] - points[j][0];
+        const dy = points[i][1] - points[j][1];
 
-    for (let j = 0; j < n; j++) {
-        if (i === j) continue;
-
-        x2 = Math.min(points[j][0]);
-        y2 = Math.min(points[j][1]);
+        const dist = dx * dx + dy * dy;
+        minDist = Math.min(dist, minDist);
     }
-
-    minDiff = Math.min(minDiff, (x1 - x2) ** 2 + (y1 - y2) ** 2);
 }
 
-console.log(minDiff)
+console.log(minDist)
