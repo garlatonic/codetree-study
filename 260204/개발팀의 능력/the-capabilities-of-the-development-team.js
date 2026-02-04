@@ -7,6 +7,8 @@ const abilities = input[0].split(" ").map(Number);
 
 // 최대 능력의 팀과 최소 능력의 팀 간의 능력 차이가 최소가 되도록 만드는 프로그램을 작성
 function calcDiff(i, j, k, l) {
+    if(abilities[i] === abilities[j] || abilities[k] === abilities[l]) return -1;
+
     const sum1 = abilities[i] + abilities[j];
     const sum2 = abilities[k] + abilities[l];
     const sum3 = abilities.reduce((acc, cur) => acc + cur, 0) - sum1 - sum2;
@@ -34,4 +36,4 @@ for (let i = 0; i < 5; i++) {
     }
 }
 
-console.log(minDiff === Infinity ? -1 : minDiff);
+console.log(minDiff);
