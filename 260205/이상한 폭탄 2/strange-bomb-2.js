@@ -13,9 +13,8 @@ for (let i = 0; i < n; i++) {
         if (i === j) continue;
 
         // 같은 번호이고 k 안에 있을 경우
-        if (nums[i] === nums[j] && j - i <= k) {
-            // i ~ j에 있는 폭탄 다 터짐
-            bomb = Math.max(...(nums.slice(i, j + 1)))
+        if (nums[i] === nums[j] && Math.abs(j - i) <= k) {
+            bomb = nums[i];
         };
     }
 
