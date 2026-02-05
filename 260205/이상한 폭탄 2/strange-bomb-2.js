@@ -9,9 +9,14 @@ for (let i = 0; i < n; i++) {
     let bomb = -1;
 
     for (let j = 0; j < n; j++) {
+        // 같은 위치라면 패스
         if (i === j) continue;
 
-        if(nums[i] === nums[j] && j - i < k) bomb = nums[i];
+        // 같은 번호이고 k 안에 있을 경우
+        if (nums[i] === nums[j] && j - i <= k) {
+            // i ~ j에 있는 폭탄 다 터짐
+            bomb = Math.max(...(nums.slice(i, j + 1)))
+        };
     }
 
     maxBomb = Math.max(maxBomb, bomb)
