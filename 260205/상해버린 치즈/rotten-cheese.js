@@ -26,8 +26,8 @@ for (let i = 0; i < s; i++) {
         if (info2[i].t > info1[j].t && info2[i].p === info1[j].p) {
             cheeseMap.set(info1[j].cheese,
                 cheeseMap.get(info1[j].cheese)
-                    ? [...cheeseMap.get(info1[j].cheese), info1[j].p]
-                    : [info1[j].p]
+                    ? cheeseMap.get(info1[j].cheese).add(info1[j].p)
+                    : new Set([info1[j].p])
             )
         }
     }
@@ -37,20 +37,17 @@ for (let i = 0; i < s; i++) {
     const { p } = info2[i];
 
     cheeseMap.forEach((v, k) => {
-        if (v.indexOf(p) === -1) {
+        if (!v.has(p)) {
             cheeseMap.delete(k);
         }
     })
 }
 
-let maxCount = 0;
+const people = new Set();
 cheeseMap.forEach((_, k) => {
-    let count = 0;
     for (let j = 0; j < d; j++) {
-        if (info1[j].cheese === k) count++;
+        if (info1[j].cheese === k) people.add(info1[j].p);
     }
-
-    maxCount = Math.max(count, maxCount)
 })
 
-console.log(maxCount)
+console.log(people.size)
