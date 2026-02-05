@@ -6,7 +6,7 @@ const nums = input.slice(1, n + 1).map(Number);
 // Please Write your code here.
 let maxBomb = -1;
 for (let i = 0; i < n; i++) {
-    let bomb = 0;
+    let bomb = -1;
 
     for (let j = 0; j < n; j++) {
         if (i === j) continue;
