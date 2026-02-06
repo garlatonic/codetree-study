@@ -5,7 +5,6 @@ const commands = input.slice(1).map(line => line.split(' ').map(Number));
 // Please Write your code here.
 
 let maxCount = 0;
-let maxCup = 0;
 for (let i = 1; i <= 3; i++) {
     let cup = [1, 2, 3];
     let count = 0;
@@ -17,8 +16,7 @@ for (let i = 1; i <= 3; i++) {
         if (cup[c - 1] === i) count++;
     }
 
-    if (maxCount < count) maxCup = i;
     maxCount = Math.max(maxCount, count);
 }
 
-console.log(maxCup)
+console.log(maxCount)
