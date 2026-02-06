@@ -13,7 +13,7 @@ for (let i = 1; i <= 1000; i++) {
         const prev = h[j - 1];
         const curr = h[j];
 
-        if (prev > i && curr <= i) {
+        if (prev <= i && curr > i) {
             count++;
         }
     }
