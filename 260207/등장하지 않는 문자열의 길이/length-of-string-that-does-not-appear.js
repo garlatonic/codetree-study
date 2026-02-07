@@ -7,12 +7,16 @@ const string = input[1];
 // Please Write your code here.
 let minLength = Infinity;
 
-for (let j = 1; j < n; j++) {
-    const split = string.slice(0, j + 1);
-    const after = string.replaceAll(split, "");
+for (let i = 1; i <= n; i++) {
+    // i는 문자열 길이
+    let allChecked = true;
+    for (let j = 0; j <= n - i; j++) {
+        const splitStr = string.split("").splice(j, i).join("");
 
-    if (after.length + split.length < string.length) continue;
-    minLength = Math.min(minLength, split.length);
+        if (string.indexOf(splitStr) !== string.lastIndexOf(splitStr))
+            allChecked = false;
+    }
+    if (allChecked) minLength = Math.min(minLength, i);
 }
 
-console.log(minLength)
+console.log(minLength);
