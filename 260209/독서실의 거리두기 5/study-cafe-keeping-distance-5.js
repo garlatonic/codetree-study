@@ -2,44 +2,49 @@ const fs = require("fs");
 const input = fs.readFileSync(0).toString().trim().split('\n');
 
 const n = Number(input[0]);
-const seat = input[1].split('');
+const seat = input[1].split('').map(Number);
 
 // Please Write your code here.
-const pairs = [];
+// 기존 배열에서 가장 최소의 거리 구하기
+let minOriginDist = Infinity;
 for (let i = 0; i < n; i++) {
-    if (seat[i] !== "1") continue;
     for (let j = i + 1; j < n; j++) {
-        if (seat[j] !== "1") continue;
-        else {
-            pairs.push([i, j]);
-            break;
+        if (seat[i] === 1 && seat[j] === 1) {
+            minOriginDist = Math.min(minOriginDist, j - i)
         }
     }
 }
 
-let answer = 0;
-for (let i = 0; i < pairs.length; i++) {
-    const [x, y] = pairs[i];
-    let maxDist = 0;
+let maxDist = 0;
+for (let i = 0; i < n; i++) {
+    if (seat[i] === 1) continue;
 
-    for (let j = x + 1; j < y; j++) {
-        let dist = y - j > j - x ? j - x : y - j;
-        maxDist = Math.max(maxDist, dist)
+    // 이전, 다음 자리 체크 (바로 이전 좌석 확인)
+    let left = -1;
+    let right = -1;
+    for (let l = i - 1; l >= 0; l--) {
+        if (seat[l] === 1) {
+            left = l;
+            break;
+        }
+    }
+    for (let r = i + 1; r < n; r++) {
+        if (seat[r] === 1) {
+            right = r;
+            break;
+        }
     }
 
-    // 혹시 만약에? 0번째랑 n번째에 1이 없을 경우
-    let start = ["0", pairs[0][0]];
-    let end = [pairs[pairs.length - 1][1], (n - 1).toString()];
-    if (start[0] !== start[1]) {
-        let dist = start[1] - start[0];
-        maxDist = Math.max(maxDist, dist)
+    let dist = 0;
+    if (left < 0 && right >= 0) {
+        dist = Math.abs(right - i);
+    } else if (left >= 0 && right < 0) {
+        dist = Math.abs(left - i);
+    } else {
+        dist = Math.abs(left - i) > Math.abs(right - i) ? Math.abs(right - i) : Math.abs(left - i);
     }
-    if (end[0] !== end[1]) {
-        let dist = end[1] - end[0];
-        maxDist = Math.max(maxDist, dist)
-    }
-
-    answer = Math.max(answer, maxDist);
+    
+    dist = Math.min(dist, minOriginDist);
+    maxDist = Math.max(maxDist, dist);
 }
-
-console.log(answer);
+console.log(maxDist)
