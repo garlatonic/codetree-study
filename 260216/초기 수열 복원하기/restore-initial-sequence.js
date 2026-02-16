@@ -14,8 +14,8 @@ for (let i = 1; i <= n; i++) {
         // 숫자가 범위를 벗어나면 아웃
         if (next > n || next < 1) break;
 
-        // 이전 숫자와 동일할 경우에도 아웃
-        if(sums[init.length - 1] - next === next) break;
+        // 초기 수열에 있을 경우에도 아웃
+        if(init.includes(sums[init.length - 1] - next)) break;
 
         next = sums[init.length - 1] - next;
         init.push(next);
