@@ -9,29 +9,36 @@ for (let i = 1; i <= n; i++) {
 
 // Please write your code here.
 let maxBomb = 0;
+let bomb = 0;
 for (let i = 0; i < n; i++) {
     // i번째에 있는 폭탄
     const bombNum = nums[i];
+    // 현재 터진 폭탄 갯수
+    let count = 1;
+    // 지금 탐색하고있는 인덱스
+    let curr = i;
 
-    // 이전 폭탄 좌표
-    let prev = i;
-    // 폭발한 폭탄 카운트
-    let count = 0;
-    // 거리
-    let dist = 0;
+    while (curr < n) {
+        let found = false;  // 같은 폭탄을 찾았는지 표시
 
-    while (dist < k) {
-        dist++;
+        for (let j = 0; j < k && curr < n; j++) {
+            curr++;
 
-        if (nums[prev + dist] === bombNum) {
-            count++;
-            prev += dist;
-            dist = 0;
+            if (nums[curr] === bombNum) {
+                found = true;
+                count++;
+                break;
+            }
         }
+
+        if (!found) break;
     }
 
-    maxBomb = Math.max(maxBomb, count);
+    if (maxBomb < count) {
+        bomb = bombNum;
+        maxBomb = Math.max(maxBomb, count);
+    }
 }
 
-console.log(maxBomb);
+console.log(bomb);
 process.exit();
