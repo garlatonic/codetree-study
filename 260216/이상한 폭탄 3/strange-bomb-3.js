@@ -14,15 +14,14 @@ for (let i = 0; i < n; i++) {
     // i번째에 있는 폭탄
     const bombNum = nums[i];
     // 현재 터진 폭탄 갯수
-    let count = 1;
+    let count = 0;
     // 지금 탐색하고있는 인덱스
     let curr = i;
 
     while (curr < n) {
-        let found = false;  // 같은 폭탄을 찾았는지 표시
-
-        for (let j = 0; j < k && curr < n; j++) {
+        for (let j = 0; j < k; j++) {
             curr++;
+            if(curr >= n) break;
 
             if (nums[curr] === bombNum) {
                 found = true;
@@ -30,13 +29,13 @@ for (let i = 0; i < n; i++) {
                 break;
             }
         }
-
-        if (!found) break;
     }
 
     if (maxBomb < count) {
         bomb = bombNum;
-        maxBomb = Math.max(maxBomb, count);
+        maxBomb = count;
+    } else if (maxBomb === count) {
+        bomb = Math.max(bomb, bombNum);
     }
 }
 
