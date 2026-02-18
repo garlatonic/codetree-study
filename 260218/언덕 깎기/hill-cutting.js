@@ -18,8 +18,8 @@ for (let i = 0; i <= 100; i++) {
         if (hills[j] - i <= 17 && hills[j] >= i) continue;
 
         let x = hills[j] - (i + 17)
-        if (hills[j] < j) x = i - hills[j];
-        
+        if (hills[j] < i) x = i - hills[j];
+
         costs = costs + (x * x);
     }
 
