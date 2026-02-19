@@ -8,7 +8,7 @@ const a = input[1].split(' ').map(Number);
 a.sort((a, b) => b - a);
 
 let result = 0;
-for (let h = Math.max(...a); h >= Math.min(...a); h--) {
+for (let h = 0; h <= 100; h++) {
     let hCount = 0;
     let lCount = 0;
 
@@ -16,15 +16,14 @@ for (let h = Math.max(...a); h >= Math.min(...a); h--) {
         if (a[i] >= h) {
             hCount += 1;
         } else if (a[i] + 1 === h && lCount < l) {
-            lCount += a[i] + 1 === h ? 1 : 0;
+            lCount += 1;
             hCount += 1;
         }
     }
 
-    if(h <= hCount) {
-        result = h;
-        break;
+    if (h <= hCount) {
+        result = Math.max(h, result);
     }
 }
 
-console.log(result)
+console.log(result);
