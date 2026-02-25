@@ -15,35 +15,28 @@ class Node {
 
 class DDL {
     constructor() {
-        this.head = null;
-        this.tail = null;
+        this.END = new Node(-1);
+        this.head = this.END;
+        this.tail = this.END;
     }
     pushFront(newData) {
-        if (this.head === null) {
-            const newNode = new Node(newData);
-            this.head = newNode;
-            this.tail = newNode;
-        } else {
-            const newNode = new Node(newData);
-            newNode.next = this.head;
+        const newNode = new Node(newData);
+        newNode.next = this.head;
 
-            this.head.prev = newNode;
-            this.head = newNode;
-            newNode.prev = null;
-        }
+        this.head.prev = newNode;
+        this.head = newNode;
+        newNode.prev = null;
     }
     pushBack(newData) {
-        if (this.tail === null) {
-            const newNode = new Node(newData);
-            this.head = newNode;
-            this.tail = newNode;
+        if (this.begin() === this.end()) {
+            this.pushFront(newData);
         } else {
             const newNode = new Node(newData);
-            newNode.prev = this.tail;
 
-            this.tail.next = newNode;
-            this.tail = newNode;
-            newNode.next = null;
+            newNode.prev = this.tail.prev;
+            this.tail.prev.next = newNode;
+            newNode.next = this.tail;
+            this.tail.prev = newNode;
         }
     }
     delete(node) {
@@ -98,18 +91,18 @@ commands.forEach((command) => {
     } else if (c[0] === "R") {
         if (l.end() !== it) it = it.next;
     } else if (c[0] === "D") {
-        if (l.end() !== it) {
+        if (it !== l.end()) {
             l.delete(it);
         }
     } else if (c[0] === "P") {
-        l.insert(it.next, c[1]);
-        it = it.next;
+        l.insert(it, c[1]);
     }
 })
 
 const result = [];
+
 let fr = l.begin();
-while (fr !== null) {
+while (fr.data !== -1) {
     result.push(fr.data);
     fr = fr.next;
 }
