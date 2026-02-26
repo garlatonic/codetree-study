@@ -91,7 +91,7 @@ commands.forEach((command) => {
         if (it !== l.end() && it.next !== l.end()) it = it.next;
     } else if (c[0] === "D") {
         if (it.next !== l.end()) {
-            it = l.delete(it.next);
+            l.delete(it.next);
         }
     } else if (c[0] === "P") {
         it = l.insert(it, c[1]);
