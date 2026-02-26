@@ -88,7 +88,7 @@ commands.forEach((command) => {
     if (c[0] === "L") {
         if (it !== l.begin()) it = it.prev;
     } else if (c[0] === "R") {
-        if (it !== l.end()) it = it.next;
+        if (it !== l.end() && it.next !== l.end()) it = it.next;
     } else if (c[0] === "D") {
         if (it.next !== l.end()) {
             it = l.delete(it.next);
