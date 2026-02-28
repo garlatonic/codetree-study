@@ -6,7 +6,7 @@ const arr = input[1].split(' ').map(Number);
 
 // Please write your code here.
 function radixSort(array, k) {
-    for (let pos = k - 1; pos >= 0; pos--) {
+    for (let pos = 0; pos < k; pos++) {
         const newArr = Array.from({ length: 10 }, () => []);
         for (let i = 0; i < array.length; i++) {
             const digit = Math.floor((array[i] / Math.pow(10, pos)) % 10);
@@ -14,8 +14,8 @@ function radixSort(array, k) {
         }
 
         const storeArr = [];
-        for(let i = 0; i < 10; i++) {
-            for(let j = 0; j < newArr[i].length; j++) {
+        for (let i = 0; i < 10; i++) {
+            for (let j = 0; j < newArr[i].length; j++) {
                 storeArr.push(newArr[i][j]);
             }
         }
