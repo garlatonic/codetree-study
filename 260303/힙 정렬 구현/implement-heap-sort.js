@@ -28,5 +28,5 @@ function heapify(arr, n, i) {
     }
 }
 
-heapSort(result, n - 1);
+heapSort(result, n);
 console.log(result.slice(1).join(" "))
