@@ -2,17 +2,23 @@ const fs = require("fs");
 const input = fs.readFileSync(0).toString().trim().split('\n');
 const bracketStr = input[0];
 // Please write your code here.
-const result = [];
+const stack = [];
+let isValid = true;
 
-for (const str of bracketStr) {
-    if (str === "(") {
-        result.push("(")
+for (const ch of bracketStr) {
+    if (ch === "(") {
+        stack.push("(");
     } else {
-        if (result.length === 0) break;
-        result.pop();
+        if (stack.length === 0) {
+            isValid = false;
+            break;
+        }
+        stack.pop();
     }
 }
 
-if(bracketStr[0] === ")") result.push("(");
+if (stack.length !== 0) {
+    isValid = false;
+}
 
-console.log(result.length > 0 ? "No" : "Yes")
+console.log(isValid ? "Yes" : "No");
