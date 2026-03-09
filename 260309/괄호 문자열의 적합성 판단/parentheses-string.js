@@ -13,4 +13,6 @@ for (const str of bracketStr) {
     }
 }
 
+if(bracketStr[0] === ")") result.push("(");
+
 console.log(result.length > 0 ? "No" : "Yes")
