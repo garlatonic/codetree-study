@@ -57,6 +57,7 @@ function shiftGrid(r1, c1, r2, c2) {
   for (let i = r2 - 1; i > r1 - 1; i--) {
     grid[i][c2 - 1] = grid[i - 1][c2 - 1];
   }
+
   grid[r1 - 1][c1] = lastLeft;
   grid[r1 - 1][c2 - 1] = lastUp;
   grid[r2 - 1][c2 - 2] = lastRight;
@@ -66,13 +67,11 @@ function shiftGrid(r1, c1, r2, c2) {
 // 복사본을 만드는 함수
 function createCopyGrid() {
   const copy = Array.from({ length: n }, () => Array(m).fill(-1));
-
   for (let r = 0; r < n; r++) {
     for (let c = 0; c < m; c++) {
       copy[r][c] = grid[r][c];
     }
   }
-
   return copy;
 }
 
