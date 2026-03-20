@@ -1,85 +1,69 @@
 const fs = require("fs");
 const input = fs.readFileSync(0).toString().trim().split("\n");
 
-const [n, m, q] = input[0].split(" ").map(Number);
-const grid = input.slice(1, 1 + n).map((line) => line.split(" ").map(Number));
+const [N, M, Q] = input[0].split(" ").map(Number);
+const board = input.slice(1, 1 + N).map((line) => line.split(" ").map(Number));
 const winds = input
-  .slice(1 + n, 1 + n + q)
+  .slice(1 + N, 1 + N + Q)
   .map((line) => line.split(" ").map(Number));
 
-// Please Write your code here.
-for (let w = 0; w < q; w++) {
-  let [r1, c1, r2, c2] = winds[w]; // 여기서 r1, c1, r2, c2는 1-index
-  // 0-index로 만들기
-  [r1, c1, r2, c2] = [r1 - 1, c1 - 1, r2 - 1, c2 - 1];
+const dxs = [-1, 0, 1, 0];
+const dys = [0, 1, 0, -1];
 
-  // 가장자리만 돌리기
-  shiftGrid(r1, c1, r2, c2);
+function inRange(nx, ny) {
+  return 0 <= nx && nx < N && 0 <= ny && ny < M;
+}
 
-  // 복사본 생성
-  const copy = createCopyGrid();
+function deepCopy(b) {
+  return b.map((row) => [...row]);
+}
 
-  const dy = [-1, 1, 0, 0];
-  const dx = [0, 0, 1, -1];
+for (let w = 0; w < Q; w++) {
+  let [r1, c1, r2, c2] = winds[w];
+  r1--;
+  c1--;
+  r2--;
+  c2--;
 
-  for (let y = r1; y <= r2; y++) {
-    for (let x = c1; x <= c2; x++) {
-      let sum = copy[y][x];
-      let count = 1;
+  const grid = Array.from({ length: N }, () => Array(M).fill(0));
 
-      for (let d = 0; d < 4; d++) {
-        if (!isValid(y + dy[d], x + dx[d])) continue;
-        sum += copy[y + dy[d]][x + dx[d]];
-        count += 1;
+  // 가장자리 회전
+  for (let j = c1; j < c2; j++) {
+    grid[r1][j + 1] = board[r1][j]; // 윗변
+    grid[r2][j] = board[r2][j + 1]; // 아랫변
+  }
+  for (let i = r1; i < r2; i++) {
+    grid[i + 1][c2] = board[i][c2]; // 오른변
+    grid[i][c1] = board[i + 1][c1]; // 왼변
+  }
+
+  // 회전 결과 board에 반영 (내부 제외)
+  for (let i = r1; i <= r2; i++) {
+    for (let j = c1; j <= c2; j++) {
+      if (r1 + 1 <= i && i <= r2 - 1 && c1 + 1 <= j && j <= c2 - 1) continue;
+      board[i][j] = grid[i][j];
+    }
+  }
+
+  // 평균 업데이트
+  const newBoard = deepCopy(board);
+  for (let i = r1; i <= r2; i++) {
+    for (let j = c1; j <= c2; j++) {
+      let ans = 1;
+      for (let k = 0; k < 4; k++) {
+        const ni = i + dxs[k];
+        const nj = j + dys[k];
+        if (inRange(ni, nj)) {
+          ans++;
+          newBoard[i][j] += board[ni][nj];
+        }
       }
-
-      grid[y][x] = Math.floor(sum / count);
-    }
-  }
-}
-
-const answer = grid.join("\n").replaceAll(",", " ");
-console.log(answer);
-
-// 가장자리를 shift하는 함수
-function shiftGrid(r1, c1, r2, c2) {
-  const topLeft = grid[r1 + 1][c1];
-  const topRight = grid[r1][c2 - 1];
-  const bottomRight = grid[r2 - 1][c2];
-  const bottomLeft = grid[r2][c1 + 1];
-
-  for (let i = c2 - 2; i >= c1; i--) {
-    grid[r1][i + 1] = grid[r1][i];
-  }
-  for (let i = r2 - 2; i > r1; i--) {
-    grid[i + 1][c2] = grid[i][c2];
-  }
-  for (let i = c1 + 1; i < c2; i++) {
-    grid[r2][i] = grid[r2][i + 1];
-  }
-  for (let i = r1 + 1; i < r2; i++) {
-    grid[i][c1] = grid[i + 1][c1];
-  }
-
-  grid[r1][c1] = topLeft;
-  grid[r1][c2] = topRight;
-  grid[r2][c2] = bottomRight;
-  grid[r2][c1] = bottomLeft;
-}
-
-// 복사본을 만드는 함수
-function createCopyGrid() {
-  const copy = Array.from({ length: n }, () => Array(m).fill(-1));
-
-  for (let r = 0; r < n; r++) {
-    for (let c = 0; c < m; c++) {
-      copy[r][c] = grid[r][c];
+      newBoard[i][j] = Math.floor(newBoard[i][j] / ans);
     }
   }
 
-  return copy;
+  // board 업데이트
+  for (let i = 0; i < N; i++) board[i] = [...newBoard[i]];
 }
 
-function isValid(y, x) {
-  return 0 <= y && y < n && 0 <= x && x < m;
-}
+console.log(board.map((row) => row.join(" ")).join("\n"));
