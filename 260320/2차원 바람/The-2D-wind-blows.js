@@ -2,7 +2,7 @@ const fs = require("fs");
 const input = fs.readFileSync(0).toString().trim().split("\n");
 
 const [N, M, Q] = input[0].split(" ").map(Number);
-const board = input.slice(1, 1 + N).map((line) => line.split(" ").map(Number));
+const board = input.slice(1, 1 + N).map((line) => line.trim().split(" ").map(Number));
 const winds = input
   .slice(1 + N, 1 + N + Q)
   .map((line) => line.split(" ").map(Number));
