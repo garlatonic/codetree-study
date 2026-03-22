@@ -14,9 +14,9 @@ for (let i = 0; i < 5; i++) {
 console.log("name");
 [...students]
     .sort((a, b) => a.name.localeCompare(b.name))
-    .forEach((student) => console.log(Object.values(student).join(" ")));
+    .forEach((student) => console.log(student.name, student.height, student.weight.toFixed(1)));
 
 console.log(`\nheight`);
 [...students]
     .sort((a, b) => b.height - a.height)
-    .forEach((student) => console.log(Object.values(student).join(" ")));
+    .forEach((student) => console.log(student.name, student.height, student.weight.toFixed(1)));
