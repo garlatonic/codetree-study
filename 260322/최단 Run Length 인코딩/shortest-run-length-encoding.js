@@ -3,7 +3,7 @@ const input = fs.readFileSync(0).toString().trim().split("\n");
 const A = input[0].split("");
 
 // Please Write your code here.
-let minLength = A.length;
+let minLength = Infinity;
 
 for (let shift = 0; shift < A.length; shift++) {
   // shift된 문자열 만들기
@@ -27,9 +27,7 @@ for (let shift = 0; shift < A.length; shift++) {
       count = 1; // 카운트 초기화
     }
   }
-  // 마지막 문자 처리
   compressed += count; // 마지막 문자 개수 추가
-
   minLength = Math.min(minLength, compressed.length);
 }
 
