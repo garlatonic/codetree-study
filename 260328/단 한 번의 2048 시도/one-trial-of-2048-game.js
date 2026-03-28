@@ -1,7 +1,7 @@
 const fs = require("fs");
 const input = fs.readFileSync(0).toString().trim().split("\n");
 
-const grid = input.slice(0, 4).map((line) => line.split(" ").map(Number));
+const grid = input.slice(0, 4).map((line) => line.trim().split(" ").map(Number));
 const dir = input[4];
 
 // Please Write your code here.
@@ -27,7 +27,7 @@ if (dir === "L") {
   }
 } else if (dir === "R") {
   for (let r = 0; r < 4; r++) {
-    grid[r] = moveLine(grid[r].reverse()).reverse();
+    grid[r] = moveLine([...grid[r]].reverse()).reverse();
   }
 } else if (dir === "U") {
   // 열 추출해서 처리
