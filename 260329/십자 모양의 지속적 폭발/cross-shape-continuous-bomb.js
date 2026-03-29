@@ -2,7 +2,7 @@ const fs = require("fs");
 const input = fs.readFileSync(0).toString().trim().split("\n");
 
 const [n, m] = input[0].split(" ").map(Number);
-const grid = input.slice(1, n + 1).map((line) => line.split(" ").map(Number));
+const grid = input.slice(1, n + 1).map(line => line.split(" ").map(Number));
 const bombColumns = input.slice(n + 1, n + 1 + m).map(Number);
 
 function gravity() {
@@ -42,4 +42,4 @@ for (const bombColumn of bombColumns) {
     gravity();
 }
 
-console.log(grid.map((row) => row.join(" ")).join("\n"));
+console.log(grid.map(row => row.join(" ")).join("\n"));
