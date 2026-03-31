@@ -8,9 +8,9 @@ const numbers2d = input
 
 // Please Write your code here.
 for (let i = 0; i < k; i++) {
-  explode();
+  while(explode()) explode();
   rotate();
-  explode();
+  while(explode()) explode();
 }
 
 console.log(numbers2d.flat().filter((el) => el !== 0).length);
@@ -33,7 +33,7 @@ function rotate() {
 }
 
 function explode() {
-  // 연결된 폭탄 그룹을 찾고, 그룹의 크기가 m 이상인 경우 폭발 처리
+  let exploded = false;
   for (let x = 0; x < n; x++) {
     const column = [];
     let targetNumber;
@@ -46,6 +46,7 @@ function explode() {
         if (column.length >= m) {
           for (const { y, x } of column) {
             numbers2d[y][x] = 0;
+            exploded = true;
           }
         }
         column.length = 0;
@@ -64,6 +65,7 @@ function explode() {
           for (const { y, x } of column) {
             numbers2d[y][x] = 0;
           }
+          exploded = true;
         }
         column.length = 0;
         targetNumber = value;
@@ -75,11 +77,13 @@ function explode() {
     if (column.length >= m) {
       for (const { y, x } of column) {
         numbers2d[y][x] = 0;
+        exploded = true;
       }
     }
   }
 
   gravity();
+  return exploded;
 }
 
 function gravity() {
