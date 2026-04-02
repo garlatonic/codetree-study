@@ -7,7 +7,10 @@ const grid = input.slice(1).map((line) => line.trim().split(" ").map(Number));
 K--; // 0-based index
 
 let row = 0;
+
 while (true) {
+    if (row + 1 >= N) break;
+
     let isLanded = false;
 
     for (let c = K; c < K + M; c++) {
@@ -23,6 +26,10 @@ while (true) {
         grid[row + 1][c] = 1;
     }
     row++;
+}
+
+for (let c = K; c < K + M; c++) {
+    grid[row][c] = 1;
 }
 
 grid.forEach((line) => console.log(line.join(" ")));
