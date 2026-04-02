@@ -1,8 +1,8 @@
 const fs = require("fs");
 const input = fs.readFileSync(0).toString().trim().split('\n');
 
-let [n, currX, currY] = input[0].split(' ').map(Number);
-let grid = input.slice(1, n + 1).map(line => line.split(' ').map(Number));
+let [n, currY, currX] = input[0].split(' ').map(Number);
+let grid = input.slice(1, n + 1).map(line => line.trim().split(' ').map(Number));
 
 // Please Write your code here.
 currX--;
@@ -11,7 +11,6 @@ currY--;
 const dy = [-1, 1, 0, 0];
 const dx = [0, 0, -1, 1];
 
-let maxValue = grid[currY][currX];
 const route = [grid[currY][currX]];
 
 while (true) {
@@ -20,11 +19,10 @@ while (true) {
         const nextY = currY + dy[d];
         const nextX = currX + dx[d];
 
-        if (isRange(nextY, nextX) && grid[nextY][nextX] > maxValue) {
-            maxValue = grid[nextY][nextX];
-            route.push(maxValue);
+        if (isRange(nextY, nextX) && grid[nextY][nextX] > grid[currY][currX]) {
             currY = nextY;
             currX = nextX;
+            route.push(grid[currY][currX]);
             isMoved = true;
             break;
         }
