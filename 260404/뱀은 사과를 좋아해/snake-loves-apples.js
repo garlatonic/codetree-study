@@ -11,10 +11,13 @@ const routes = input.slice(1 + M, 1 + M + K).map((line) => {
     return { d, p: Number(p) };
 });
 
+const appleSet = new Set(apples.map(([y, x]) => `${y},${x}`));
+const snake = [[0, 0]];
+const snakeSet = new Set(["0,0"]);
+
 const dy = [-1, 1, 0, 0];
 const dx = [0, 0, -1, 1];
 
-const snake = [[0, 0]];
 let time = 0;
 
 for (const { d, p } of routes) {
@@ -24,26 +27,34 @@ for (const { d, p } of routes) {
         const [headY, headX] = snake[0];
         const newY = headY + dy[dir];
         const newX = headX + dx[dir];
+        const key = `${newY},${newX}`;
 
-        if (
-            !isRange(newY, newX) ||
-            snake.some(([y, x]) => y === newY && x === newX)
-        ) {
+        // 경로 이탈시 종료
+        if (!isRange(newY, newX)) {
             console.log(time);
             process.exit(0);
         }
-        if (apples.some(([y, x]) => y === newY && x === newX)) {
-            // 사과 먹음
-            apples.splice(
-                apples.findIndex(([y, x]) => y === newY && x === newX),
-                1,
-            );
-            // 새로운 좌표 추가 (길이 늘어남)
+
+        const willEatApple = appleSet.has(key);
+        const tailKey = !willEatApple
+            ? `${snake[snake.length - 1][0]},${snake[snake.length - 1][1]}`
+            : null;
+
+        // 충돌 판정: 사과를 먹지 않는 경우에는 빠질 꼬리 자리는 예외
+        if (snakeSet.has(key) && key !== tailKey) {
+            console.log(time);
+            process.exit(0);
+        }
+
+        if (willEatApple) {
+            appleSet.delete(key);
             snake.unshift([newY, newX]);
+            snakeSet.add(key);
         } else {
-            // 길이가 늘어나지 않으므로 1칸씩 이동
-            snake.pop();
+            const [ty, tx] = snake.pop();
+            snakeSet.delete(`${ty},${tx}`);
             snake.unshift([newY, newX]);
+            snakeSet.add(key);
         }
     }
 }
