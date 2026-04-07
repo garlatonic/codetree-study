@@ -10,8 +10,8 @@ const starts = input.slice(N + 1).map((line) => {
     return { r: r - 1, c: c - 1 };
 });
 
-const dy = [1, -1, 0, 0];
-const dx = [0, 0, 1, -1];
+const dy = [-1, 1, 0, 0];
+const dx = [0, 0, -1, 1];
 
 const grid = Array.from({ length: N }, () => Array(N).fill(0));
 for (const { r, c } of starts) {
