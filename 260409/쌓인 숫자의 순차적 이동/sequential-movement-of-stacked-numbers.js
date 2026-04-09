@@ -1,9 +1,9 @@
 const fs = require("fs");
 const input = fs.readFileSync(0).toString().trim().split('\n');
 
-const [n, m] = input[0].split(' ').map(Number);
-const grid = input.slice(1, 1 + n).map(line => line.split(' ').map(Number));
-const moveNums = input[1 + n].split(' ').map(Number);
+const [n, m] = input[0].trim().split(' ').map(Number);
+const grid = input.slice(1, 1 + n).map(line => line.trim().split(' ').map(Number));
+const moveNums = input[1 + n].trim().split(' ').map(Number);
 
 // Please Write your code here.
 const dy = [1, 1, 1, 0, -1, -1, -1, 0];
@@ -35,7 +35,7 @@ for (const moveNum of moveNums) {
     }
 
     // 주변에 아무것도 없으면 
-    if (dir === -1) break;
+    if (dir === -1) continue;
 
     const ny = y + dy[dir];
     const nx = x + dx[dir];
@@ -48,8 +48,8 @@ for (const moveNum of moveNums) {
 
 board.forEach((row) => {
     row.forEach((col) => {
-        if(!col.length) console.log("None");
-        else console.log(col.reverse().join(" "));
+        if (!col.length) console.log("None");
+        else console.log([...col].reverse().join(" "));
     })
 })
 
