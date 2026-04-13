@@ -17,9 +17,7 @@ const dir = {
     L: 3,
 };
 
-let grid = Array.from({ length: n }, () =>
-    Array.from({ length: n }, () => []),
-);
+let grid = Array.from({ length: n }, () => Array.from({ length: n }, () => []));
 // 초기 구슬 세팅
 for (const [r, c, d, v] of marbles) {
     grid[r - 1][c - 1].push([dir[d], v]);
@@ -40,8 +38,8 @@ while (time < t) {
                 let ny = r + dy[d] * v;
                 let nx = c + dx[d] * v;
 
-                // 튕겨나갈 경우
-                if (!isRange(ny, nx)) {
+                // 속력이 클 경우 여러 번 튕겨나갈 수 있으므로 while문으로 처리
+                while (!isRange(ny, nx)) {
                     // 반대 방향으로 튕겨지도록 방향 변경
                     d = d % 2 === 0 ? d + 1 : d - 1;
                     if (ny < 0)
