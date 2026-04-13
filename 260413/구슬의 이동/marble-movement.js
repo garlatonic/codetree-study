@@ -19,8 +19,9 @@ const dir = {
 
 let grid = Array.from({ length: n }, () => Array.from({ length: n }, () => []));
 // 초기 구슬 세팅
-for (const [r, c, d, v] of marbles) {
-    grid[r - 1][c - 1].push([dir[d], v]);
+for (let i = 0; i < m; i++) {
+    const [r, c, d, v] = marbles[i];
+    grid[r - 1][c - 1].push([dir[d], v, i + 1]);
 }
 
 let time = 0;
@@ -34,7 +35,7 @@ while (time < t) {
             if (!marbs.length) continue;
 
             for (let i = 0; i < marbs.length; i++) {
-                let [d, v] = marbs[i];
+                let [d, v, id] = marbs[i];
                 let ny = r + dy[d] * v;
                 let nx = c + dx[d] * v;
 
@@ -50,7 +51,7 @@ while (time < t) {
                     else if (nx >= n) nx = 2 * (n - 1) - nx;
                 }
 
-                newGrid[ny][nx].push([d, v]);
+                newGrid[ny][nx].push([d, v, id]);
             }
         }
     }
@@ -61,7 +62,10 @@ while (time < t) {
             const marbs = newGrid[r][c];
             if (marbs.length <= k) continue; // 동일한 위치에 k개 이하의 구슬이 있으면 충돌 없음
             // 우선 순위가 높은 구슬 k개만 남기고 나머지 제거하기
-            marbs.sort((a, b) => b[1] - a[1]); // 속력 기준 내림차순 정렬
+            marbs.sort((a, b) => {
+                if (b[1] !== a[1]) return b[1] - a[1];
+                return b[2] - a[2];
+            });
             newGrid[r][c] = marbs.slice(0, k); // 상위 k개 구슬만 남기기
         }
     }
