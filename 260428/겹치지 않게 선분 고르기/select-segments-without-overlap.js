@@ -31,7 +31,7 @@ function solution(arr) {
         if (!arr[i]) continue;
 
         const [l, r] = segments[i];
-        for (let p = l; p < r; p++) {
+        for (let p = l; p <= r; p++) {
             if (pos[p]) return 0;
 
             pos[p] = true;
