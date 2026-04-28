@@ -8,34 +8,36 @@ const lines = input.slice(1, 1 + m).map((line) => line.split(" ").map(Number));
 const first = simulation(lines);
 
 let minLines = m;
-const newLines = [];
+const removed = Array(m).fill(false);
 
-function bfs(depth) {
-    if (newLines.length > minLines) {
+function dfs(idx, count) {
+    if (idx === m) {
+        const remain = [];
+        for (let i = 0; i < m; i++) {
+            if (!removed[i]) remain.push(lines[i]);
+        }
+        if (simulation(remain).toString() === first.toString()) {
+            minLines = remain.length;
+        }
         return;
     }
-    if (simulation(newLines).toString() === first.toString()) {
-        minLines = newLines.length;
-        return;
-    }
 
-    for (let i = 1; i <= n; i++) {
-        // i번째 위치에 사다리 추가
-        newLines.push([i, depth]);
-        bfs(depth + 1);
-        newLines.pop();
-    }
+    removed[idx] = false;
+    dfs(idx + 1, count);
+
+    removed[idx] = true;
+    dfs(idx + 1, count + 1);
 }
 
-bfs(1);
+dfs(0, 0);
 console.log(minLines);
 
 // 사다리 시뮬레이션 함수
 function simulation(lines) {
     const result = [];
     const depthMap = new Map();
-    lines.sort((a, b) => a[1] - b[1]); // 깊이 기준으로 정렬
-    lines.forEach(([a, b]) => {
+    const sorted = [...lines].sort((a, b) => a[1] - b[1]);
+    sorted.forEach(([a, b]) => {
         if (!depthMap.has(b)) {
             depthMap.set(b, []);
         }
@@ -43,7 +45,7 @@ function simulation(lines) {
     });
 
     // 가장 깊은 위치
-    const maxDepth = lines[lines.length - 1] ? lines[lines.length - 1][1] : 0;
+    const maxDepth = sorted[sorted.length - 1] ? sorted[sorted.length - 1][1] : 0;
 
     for (let i = 1; i <= n; i++) {
         let depth = 1;
